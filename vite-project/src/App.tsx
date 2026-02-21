@@ -42,15 +42,40 @@ function App() {
     setContacts(prev => [newContact, ...prev])
   }
 
-
   const deleteContact = (id: number) => {
     setContacts(prev => prev.filter(c => c.id !== id))
   }
 
   return (
-    <>
-      <h1>Contactos</h1>
+    <div
+      style={{
+        maxWidth: 600,
+        margin: '0 auto',
+        padding: 20,
+        fontFamily: 'system-ui, sans-serif',
+      }}
+    >
+      {/* 🔹 HEADER (Parent component image) */}
+      <header
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          marginBottom: 24,
+        }}
+      >
+        <img
+          src="/Logo.png"
+          alt="App Logo"
+          width={48}
+          height={48}
+          style={{ borderRadius: 8 }}
+        />
 
+        <h1 style={{ margin: 0 }}>Contactos</h1>
+      </header>
+
+      {/* 🔹 CONTENT */}
       {loading ? (
         <Loader />
       ) : (
@@ -59,7 +84,7 @@ function App() {
           <ContactList contacts={contacts} onDelete={deleteContact} />
         </>
       )}
-    </>
+    </div>
   )
 }
 
