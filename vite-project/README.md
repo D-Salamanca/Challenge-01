@@ -77,26 +77,34 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/D-Salamanca/Challenge-01.git
-cd vite-project``
+cd vite-project
+```
 
 
 Install dependencies:
+```bash
 
 npm install
+```
 
 Run development server:
+```bash
 
 npm run dev
+```
 
 Build for production:
+```bash
 
 npm run build
+```
 
 🌐 Deployment
 
 The app is deployed on Netlify.
 
 Configuration:
+```bash
 
 Base directory: vite-project
 
@@ -105,7 +113,8 @@ Build command: npm run build
 Publish directory: dist
 
 Branch: Challenge-02
+```
 
 👨‍💻 Author
 
-Developed by Daniel Salamanca
+Developed by Danna Salamanca
