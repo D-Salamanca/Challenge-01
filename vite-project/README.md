@@ -1,73 +1,111 @@
-# React + TypeScript + Vite
+# 📱 Challenge02DS - Contacts PWA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Progressive Web App (PWA) built with React + TypeScript + Vite.
 
-Currently, two official plugins are available:
+This application allows users to manage contacts and can be installed on mobile devices like a native app.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+🔗 https://challenge02ds.netlify.app
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Technologies Used
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React
+- TypeScript
+- Vite
+- Service Worker (Hybrid Strategy)
+- Web App Manifest
+- Netlify (Deployment)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🖼️ Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Add new contacts
+- Delete contacts
+- Loading simulation
+- Custom logo in parent component
+- Custom app icon
+- Offline support
+- Installable PWA
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📦 PWA Implementation
+
+This app uses a **Hybrid Caching Strategy**:
+
+- **Network First** → For navigation and dynamic requests  
+- **Cache First** → For static assets (JS, CSS, images)  
+- App shell precaching for faster load and offline support  
+
+The Service Worker handles caching and offline fallback.
+
+---
+
+## 📲 How to Install on Mobile
+
+### 🤖 Android (Chrome)
+
+1. Open the app link in Chrome:
+   https://challenge02ds.netlify.app
+2. Tap the **⋮ (three dots) menu**
+3. Select **Install App** or **Add to Home Screen**
+4. Confirm installation
+5. The app will appear like a native application
+
+---
+
+### 🍎 iPhone (Safari)
+
+1. Open the app link in Safari:
+   https://challenge02ds.netlify.app
+2. Tap the **Share button**
+3. Select **Add to Home Screen**
+4. Confirm
+5. The app icon will be added to your home screen
+
+---
+
+## ⚙️ Local Development
+
+Clone the repository:
+
+```bash
+git clone https://github.com/D-Salamanca/Challenge-01.git
+cd vite-project``
+
+
+Install dependencies:
+
+npm install
+
+Run development server:
+
+npm run dev
+
+Build for production:
+
+npm run build
+
+🌐 Deployment
+
+The app is deployed on Netlify.
+
+Configuration:
+
+Base directory: vite-project
+
+Build command: npm run build
+
+Publish directory: dist
+
+Branch: Challenge-02
+
+👨‍💻 Author
+
+Developed by Daniel Salamanca
