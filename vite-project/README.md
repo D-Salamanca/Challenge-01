@@ -1,4 +1,4 @@
-```markdown
+
 # MediCare+ Admin PWA
 
 Aplicación web desarrollada en **React** como **Progressive Web App (PWA)** para la gestión administrativa de pacientes en la clínica **MediCare+**.
@@ -198,9 +198,13 @@ Esta estrategia es útil en aplicaciones médicas porque permite que la interfaz
 
 Video de demostración:
 
-```
+
 [Ver evidencia](https://drive.google.com/file/d/1wmYve22v74LruPCph-egBeNP9lQrWBuR/view?usp=sharing)
-```
+
+Imagenes de evidencia:
+<img width="1918" height="1031" alt="image" src="https://github.com/user-attachments/assets/c5f23cd2-3e2d-4577-bcbd-b482242b9fb9" />
+<img width="1919" height="1025" alt="image" src="https://github.com/user-attachments/assets/d0561507-b1d0-47e9-9203-f31e88410aa1" />
+<img width="1919" height="1020" alt="image" src="https://github.com/user-attachments/assets/87935b69-816d-4042-8920-a384b0cfc927" />
 
 ---
 
@@ -212,6 +216,8 @@ Video de demostración:
 * PWA (Service Worker + Manifest)
 * LocalStorage
 
-```
-```
+
+
+
+
 
