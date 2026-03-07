@@ -1,111 +1,217 @@
-# 📱 Challenge02DS - Contacts PWA
+```markdown
+# MediCare+ Admin PWA
 
-A Progressive Web App (PWA) built with React + TypeScript + Vite.
+Aplicación web desarrollada en **React** como **Progressive Web App (PWA)** para la gestión administrativa de pacientes en la clínica **MediCare+**.
 
-This application allows users to manage contacts and can be installed on mobile devices like a native app.
-
----
-
-## 🚀 Live Demo
-
-🔗 https://challenge02ds.netlify.app
+La aplicación permite registrar pacientes, editarlos, eliminarlos y consultarlos según el rol del usuario.
 
 ---
 
-## 🛠️ Technologies Used
+# Funcionalidades
 
-- React
-- TypeScript
-- Vite
-- Service Worker (Hybrid Strategy)
-- Web App Manifest
-- Netlify (Deployment)
+## Autenticación simulada
 
----
+La aplicación cuenta con un **LoginForm** que utiliza estado local para manejar email y contraseña.
 
-## 🖼️ Features
+Si las credenciales no coinciden se muestra el mensaje:
 
-- Add new contacts
-- Delete contacts
-- Loading simulation
-- Custom logo in parent component
-- Custom app icon
-- Offline support
-- Installable PWA
+```
 
----
+Usuario o contraseña incorrectos
 
-## 📦 PWA Implementation
+```
 
-This app uses a **Hybrid Caching Strategy**:
+Los usuarios disponibles son:
 
-- **Network First** → For navigation and dynamic requests  
-- **Cache First** → For static assets (JS, CSS, images)  
-- App shell precaching for faster load and offline support  
+Recepcionista
 
-The Service Worker handles caching and offline fallback.
+```
 
----
+[recepcion@medicare.com](mailto:recepcion@medicare.com)
+1234
 
-## 📲 How to Install on Mobile
+```
 
-### 🤖 Android (Chrome)
+Médico
 
-1. Open the app link in Chrome:
-   https://challenge02ds.netlify.app
-2. Tap the **⋮ (three dots) menu**
-3. Select **Install App** or **Add to Home Screen**
-4. Confirm installation
-5. The app will appear like a native application
+```
+
+[medico@medicare.com](mailto:medico@medicare.com)
+1234
+
+```
 
 ---
 
-### 🍎 iPhone (Safari)
+# Sesión persistente
 
-1. Open the app link in Safari:
-   https://challenge02ds.netlify.app
-2. Tap the **Share button**
-3. Select **Add to Home Screen**
-4. Confirm
-5. The app icon will be added to your home screen
+El usuario autenticado se guarda en **localStorage**.
+
+Al recargar la aplicación:
+
+- Si existe un usuario guardado se restaura la sesión automáticamente.
+- El botón **Cerrar sesión** elimina la información almacenada.
 
 ---
 
-## ⚙️ Local Development
+# Gestión de pacientes
 
-Clone the repository:
+Los pacientes se almacenan en:
 
-```bash
-git clone https://github.com/D-Salamanca/Challenge-01.git
-cd vite-project``
+```
 
+localStorage → medicare_pacientes
 
-Install dependencies:
+````
 
-npm install
+La aplicación permite:
 
-Run development server:
+- Registrar pacientes
+- Editar pacientes
+- Eliminar pacientes
+- Buscar pacientes por nombre, apellido o documento
 
-npm run dev
+---
 
-Build for production:
+# FormularioPaciente
 
-npm run build
+El componente funciona en dos modos:
 
-🌐 Deployment
+**Alta**  
+Campos vacíos para registrar un nuevo paciente.
 
-The app is deployed on Netlify.
+**Edición**  
+Si se selecciona editar, el formulario se completa automáticamente con los datos del paciente.
 
-Configuration:
+Validaciones:
 
-Base directory: vite-project
+- Nombre obligatorio
+- Apellido obligatorio
+- Documento obligatorio
+- Documento entre **7 y 8 números**
 
-Build command: npm run build
+---
 
-Publish directory: dist
+# TablaPacientes
 
-Branch: Challenge-02
+La tabla muestra:
 
-👨‍💻 Author
+- Nombre completo
+- Documento
+- Teléfono
 
-Developed by Daniel Salamanca
+Acciones disponibles para **recepcionista**:
+
+- Editar
+- Eliminar (con confirmación mediante modal)
+
+---
+
+# Buscador de pacientes
+
+El buscador permite filtrar por:
+
+- nombre
+- apellido
+- documento
+
+La búsqueda es **case-insensitive**.
+
+```javascript
+//El estado de búsqueda vive en Dashboard porque es el componente que contiene la lista de pacientes.
+//Así puede filtrar los datos y pasar a TablaPacientes solo los resultados que deben mostrarse.
+````
+
+---
+
+# Control de acceso por rol
+
+El control se realiza mediante **renderizado condicional**.
+
+**Recepcionista**
+
+* Puede crear pacientes
+* Puede editar pacientes
+* Puede eliminar pacientes
+* No puede ver estadísticas
+
+**Médico**
+
+* Puede ver la lista de pacientes
+* Puede ver estadísticas
+* No puede registrar pacientes
+
+---
+
+# Estadísticas
+
+El médico puede visualizar una estadística simple:
+
+```
+Total de pacientes registrados en el día
+```
+
+---
+
+# Configuración PWA
+
+La aplicación fue configurada como **Progressive Web App**.
+
+### manifest.json
+
+```
+name: MediCare+ Admin
+short_name: MediCare
+display: standalone
+start_url: /
+theme_color: #0C2340
+background_color: #FFFFFF
+```
+
+Incluye iconos:
+
+* 192x192
+* 512x512
+
+---
+
+# Service Worker
+
+El service worker implementa la estrategia **cache first**.
+
+Esto significa que la aplicación intenta cargar primero los recursos desde el **cache**, y si no existen los obtiene desde la red.
+
+Esta estrategia es útil en aplicaciones médicas porque permite que la interfaz básica funcione incluso sin conexión.
+
+---
+
+# Instalación en celular
+
+1. Abrir la aplicación en **Chrome**.
+2. Presionar el menú del navegador.
+3. Seleccionar **Instalar aplicación**.
+4. La aplicación se instalará como una app independiente.
+
+---
+
+# Evidencia de funcionamiento
+
+Video de demostración:
+
+```
+[Ver evidencia](https://drive.google.com/file/d/1wmYve22v74LruPCph-egBeNP9lQrWBuR/view?usp=sharing)
+```
+
+---
+
+# Tecnologías utilizadas
+
+* React
+* TypeScript
+* Vite
+* PWA (Service Worker + Manifest)
+* LocalStorage
+
+```
+```
+

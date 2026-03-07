@@ -1,83 +1,41 @@
-const CACHE_NAME = "challenge02ds-pwa-v1";
+const CACHE_NAME = "medicare-cache-v1";
 
-const APP_SHELL = [
+const urlsToCache = [
   "/",
   "/index.html",
   "/manifest.json",
-  "/Logo.png",
+  "/icon-192.png",
+  "/icon-512.png"
 ];
 
-// INSTALL: precache app shell
-self.addEventListener("install", (event) => {
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
-// ACTIVATE: cleanup old caches
-self.addEventListener("activate", (event) => {
+self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+    caches.keys().then(keys =>
+      Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      )
     )
   );
 });
 
-// HYBRID STRATEGY
-self.addEventListener("fetch", (event) => {
-  const req = event.request;
-
-  if (req.method !== "GET") return;
-
-  const url = new URL(req.url);
-
-  // 1) SPA Navigations (HTML) -> Network First, fallback to cached index.html
-  if (req.mode === "navigate") {
-    event.respondWith(
-      fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put("/index.html", copy));
-          return res;
-        })
-        .catch(() => caches.match("/index.html"))
-    );
-    return;
-  }
-
-  // 2) Static assets -> Cache First (fast), fallback to network
-  const isStatic =
-    url.pathname.startsWith("/assets/") ||
-    url.pathname.endsWith(".js") ||
-    url.pathname.endsWith(".css") ||
-    url.pathname.endsWith(".png") ||
-    url.pathname.endsWith(".svg") ||
-    url.pathname.endsWith(".ico") ||
-    url.pathname.endsWith(".webp");
-
-  if (isStatic) {
-    event.respondWith(
-      caches.match(req).then((cached) => {
-        if (cached) return cached;
-
-        return fetch(req).then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-          return res;
-        });
-      })
-    );
-    return;
-  }
-
-  // 3) Everything else (like API calls) -> Network First, fallback cache
+self.addEventListener("fetch", event => {
   event.respondWith(
-    fetch(req)
-      .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-        return res;
-      })
-      .catch(() => caches.match(req))
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });
+
+// Cache first significa que la app busca primero el recurso en caché.
+// Conviene usarla en una app médica para archivos estáticos como íconos,
+// estilos o páginas básicas que no cambian constantemente.

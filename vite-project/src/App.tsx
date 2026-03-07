@@ -1,88 +1,40 @@
-// src/App.tsx
-import { useEffect, useState } from 'react'
-import Loader from './Loader'
-import ContactList from './ContactList'
-import AddContactForm from './AddContactForm'
+import { useEffect, useState } from "react"
+import LoginForm from "./LoginForm"
+import Dashboard from "./Dashboard"
 
-export type Contact = {
-  id: number
+export type User = {
   name: string
-  phone: string
+  email: string
+  role: "recepcionista" | "medico"
+  avatar?: string
 }
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true)
-  const [contacts, setContacts] = useState<Contact[]>([])
+  const [user, setUser] = useState<User | null>(null)
 
-  // Simula carga inicial (como API)
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setContacts([
-        { id: 1, name: 'Ana', phone: '3001234567' },
-        { id: 2, name: 'Luis', phone: '3119876543' },
-        { id: 3, name: 'Sofía', phone: '3205554444' },
-      ])
-      setLoading(false)
-    }, 1200)
-
-    return () => window.clearTimeout(timer)
+    const savedUser = localStorage.getItem("medicare_user")
+    if (savedUser) {
+      setUser(JSON.parse(savedUser))
+    }
   }, [])
 
-  const addContact = (name: string, phone: string) => {
-    const newContact: Contact = {
-      id: Date.now(),
-      name,
-      phone,
-    }
-
-    console.log(
-      `Se agregó el contacto: ${newContact.name} - ${newContact.phone}`
-    )
-
-    setContacts(prev => [newContact, ...prev])
+  const handleLogin = (loggedUser: User) => {
+    setUser(loggedUser)
+    localStorage.setItem("medicare_user", JSON.stringify(loggedUser))
   }
 
-  const deleteContact = (id: number) => {
-    setContacts(prev => prev.filter(c => c.id !== id))
+  const handleLogout = () => {
+    localStorage.removeItem("medicare_user")
+    setUser(null)
   }
 
   return (
-    <div
-      style={{
-        maxWidth: 600,
-        margin: '0 auto',
-        padding: 20,
-        fontFamily: 'system-ui, sans-serif',
-      }}
-    >
-      {/* 🔹 HEADER (Parent component image) */}
-      <header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          marginBottom: 24,
-        }}
-      >
-        <img
-          src="/Logo.png"
-          alt="App Logo"
-          width={48}
-          height={48}
-          style={{ borderRadius: 8 }}
-        />
-
-        <h1 style={{ margin: 0 }}>Contactos</h1>
-      </header>
-
-      {/* 🔹 CONTENT */}
-      {loading ? (
-        <Loader />
+    <div style={{ padding: "20px" }}>
+      {user ? (
+        <Dashboard user={user} onLogout={handleLogout} />
       ) : (
-        <>
-          <AddContactForm onAdd={addContact} />
-          <ContactList contacts={contacts} onDelete={deleteContact} />
-        </>
+        <LoginForm onLogin={handleLogin} />
       )}
     </div>
   )
